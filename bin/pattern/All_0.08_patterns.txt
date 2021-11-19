@@ -1,0 +1,37 @@
+t # 20
+v 0 BOUNDARY 
+v 1 COLLABORATOR 
+e 0 1 declare
+652
+t # 21
+v 0 BOUNDARY 
+v 1 COLLABORATOR 
+v 2 COLLABORATOR 
+e 0 1 declare
+e 0 2 declare
+230
+t # 22
+v 0 COLLABORATOR 
+v 1 COLLABORATOR 
+e 0 1 call
+351
+t # 23
+v 0 BOUNDARY 
+v 1 CONSTRUCTOR 
+e 0 1 declare
+242
+t # 24
+v 0 BOUNDARY-COMMANDER 
+v 1 COLLABORATOR 
+e 0 1 declare
+378
+t # 25
+v 0 BOUNDARY-COMMANDER 
+v 1 COLLABORATOR-COMMAND 
+e 0 1 declare
+237
+t # 26
+v 0 INTERFACE 
+v 1 ABSTRACT 
+e 0 1 declare
+242
