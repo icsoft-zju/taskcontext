@@ -1,0 +1,9 @@
+t
+v 0 BOUNDARY
+v 1 COLLABORATOR
+v 2 COLLABORATOR
+v 3 COLLABORATOR
+e 0 1 declare
+e 0 2 declare
+e 2 3 call
+1
