@@ -164,13 +164,16 @@ public class PredictCodeView extends ViewPart {
 				String[] total = identi.split(" ");
 				ArrayList<String> paras = new ArrayList<String>();
 				for(String str:total) {
+					if(str.contains("{key=")) {
+						continue;
+					}
 					paras.add(str);
 				}
 				if(paras.get(0).equals("static")) {
 					paras.remove(0);
 				}
 				name += paras.get(1);
-				for(int i=2;i<paras.size()-1;i++) {
+				for(int i=2;i<paras.size();i++) {
 					name += " "+paras.get(i);
 				}
 				name+=":"+paras.get(0);
