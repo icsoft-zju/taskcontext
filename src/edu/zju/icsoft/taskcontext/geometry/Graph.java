@@ -22,7 +22,7 @@ import edu.zju.icsoft.taskcontext.gragh.SubGraph;
 import edu.zju.icsoft.taskcontext.gragh.Vertical;
 
 public class Graph {
-	private static String path = (Activator.getDefault().getBundle().getLocation()+"src/pattern").substring(16);
+	private static String path = (Activator.getDefault().getBundle().getLocation()+"src/pattern_mylyn").substring(16);
 	private int nowId,step,total_match,maxVertical,minVertical;
 	private boolean[] visit;
 	
