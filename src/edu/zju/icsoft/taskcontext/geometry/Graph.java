@@ -451,7 +451,8 @@ public class Graph {
 		for(SubGraph graph:subGraphs) {
 			for(FreGraph pattern: graphs) {
 				if(match_fre_pattern(graph,pattern)) {
-					graph.addMatch_time(pattern.getFreq());					
+					graph.addMatch_time(1);
+					
 					if(!matchgragh.contains(graph)) {
 						if(checkgraph(graph)) {
 							matchgragh.add(graph);
@@ -517,7 +518,7 @@ public class Graph {
 		ArrayList<ArrayList<Integer>>allmaps = new ArrayList<ArrayList<Integer>>();
 		ArrayList<ArrayList<Integer>>now = new ArrayList<ArrayList<Integer>>();
 		getAllmaps(now,totalList,0,allmaps,totalList.size());
-		//对每一个map进行比对
+		//露脭脙驴脪禄赂枚map陆酶脨脨卤脠露脭
 		for(ArrayList<Integer>l:allmaps) {
     		for(int i=0;i<gv.size();i++) {
     			gv.get(i).setMatchId(l.get(i));
