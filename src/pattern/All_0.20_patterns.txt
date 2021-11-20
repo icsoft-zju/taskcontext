@@ -1,5 +1,0 @@
-t # 7
-v 0 BOUNDARY 
-v 1 COLLABORATOR 
-e 0 1 declare
-652
