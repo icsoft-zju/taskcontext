@@ -16,6 +16,7 @@ import edu.zju.icsoft.taskcontext.geometry.ToolNode;
 
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMember;
@@ -62,7 +63,6 @@ public class InterestCodeView extends ViewPart {
 	private ArrayList<Boolean> visit = new ArrayList<Boolean>();
 	private static HashMap<String, String> map;
 	private static ArrayList<Relationship> map1;
-	
 	
 	private PredictCodeView predictCodeView=new PredictCodeView();
 	private Graph gragh;
@@ -120,30 +120,37 @@ public class InterestCodeView extends ViewPart {
 	}
 	
 	public void addTreeNode(IMember selectedNode) {
-		if((!(selectedNode.getParent() instanceof IType)&&(!(selectedNode.getParent() instanceof IMethod))) && checkExist(selectedNode, headnodes)) {
+		if(checkExist(selectedNode, allnodes)) {
 			return;
-		};
-		if(checkExist(selectedNode, leafnodes)) {
-			return;
-		};
-		if(!checkExist(selectedNode, allnodes)) {
-			allnodes.add(selectedNode);
-		}
-		
-		if(!(selectedNode.getParent() instanceof IType)&& !(selectedNode.getParent() instanceof IMethod)) {
-			headnodes.add(selectedNode);
 		}
 		else {
-			leafnodes.add(selectedNode);
+			allnodes.add(selectedNode);
+		}
+		headnodes.clear();
+		leafnodes.clear();
+		for(IMember member:allnodes) {
+			if(member.getParent() instanceof ICompilationUnit) {
+				headnodes.add(member);
+			}
+			else {
+				IMember p=(IMember)member.getParent();
+				if(!checkExist(p, allnodes) && member instanceof IType) {
+					headnodes.add(member);
+				}
+				else {
+					leafnodes.add(member);
+				}
+			}
 		}
 		visit.clear();
 		for(int i = 0; i < leafnodes.size(); i++) {
 			visit.add(false);
 		}
 		buildTree();
-		
 	}
 	
+	
+
 	private boolean checkExist(IMember selectedNode,ArrayList<IMember> check) {
 		for(IMember node : check) {
 			if(node.getHandleIdentifier().equals(selectedNode.getHandleIdentifier())) {
@@ -152,6 +159,16 @@ public class InterestCodeView extends ViewPart {
 		}
 		return false;
 	}
+	
+	private boolean checkEdgeExist(Relationship relate,ArrayList<Relationship>ships) {
+		for(Relationship ship:ships) {
+			if(ship.getNode1().getHandleIdentifier().equals(relate.getNode1().getHandleIdentifier()) && ship.getNode2().getHandleIdentifier().equals(relate.getNode2().getHandleIdentifier()) && ship.getRelate().equals(relate.getRelate())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 	private void buildTree() {
 		Tree myTree = window.getTree();
@@ -172,7 +189,7 @@ public class InterestCodeView extends ViewPart {
 			addothernodes(treeItem,(IType)node);
 			treeItem.setExpanded(true);
 		}
-		for(int i=0;i< leafnodes.size();i++) {
+		for(int i=0;i < leafnodes.size();i++) {
 			if(visit.get(i))continue;
 			TreeItem treeItem = new TreeItem(myTree, SWT.NONE);
 			if(leafnodes.get(i) instanceof IMethod) {
@@ -185,22 +202,8 @@ public class InterestCodeView extends ViewPart {
 			else if(leafnodes.get(i) instanceof IField){
 				treeItem.setImage(fImage); 
 			}
-			else {
-				try {
-					if(((IType)leafnodes.get(i)).isInterface()) {
-						treeItem.setImage(iImage);
-					}
-					else {
-						treeItem.setImage(cImage);
-					}
-					addothernodes(treeItem,(IType)(leafnodes.get(i)));
-					treeItem.setExpanded(true);
-					
-				} catch (JavaModelException e) {
-					e.printStackTrace();
-				}
-			}
 		}
+		
 	}
 
 	private void addothernodes(TreeItem treeItem, IType node) {
@@ -216,6 +219,7 @@ public class InterestCodeView extends ViewPart {
 				
 				if(((IMember)element).getHandleIdentifier().equals(((IMember)leafnodes.get(i)).getHandleIdentifier() )) {
 					addnodes(treeItem,node,leafnodes.get(i),i);
+					
 				}
 			}
 		}
@@ -286,7 +290,6 @@ public class InterestCodeView extends ViewPart {
 		}
 		return null;
 	}
-	
 	public void setMap(HashMap<String, String> m1, ArrayList<Relationship> m2) {
 		map=m1;
 		map1=m2;
