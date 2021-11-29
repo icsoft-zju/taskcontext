@@ -40,13 +40,4 @@ public class SubGraph {
 		verticals.remove(verticals.size()-1);
 		edges.remove(edges.size()-1);
 	}
-	public void show() {
-		for(ToolNode node:verticals) {
-			System.out.println(node.getMember().getElementName()+" "+node.getStereotype());
-		}
-		for(ToolRelation ship : edges) {
-			System.out.println(ship.getNode1().getMember().getElementName()+" "+ship.getRelate()+" "+ship.getNode2().getMember().getElementName());
-		}
-		System.out.println("~~~~~~~~~");
-	}
 }
