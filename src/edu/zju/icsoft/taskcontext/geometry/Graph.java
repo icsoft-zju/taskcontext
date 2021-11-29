@@ -317,7 +317,10 @@ public class Graph {
 		for(ToolNode node:toolNodes) {
 			if(node.getMember() instanceof IType || node.getMember() instanceof IMethod) {
 				String stereoname = map1.get(node.getMember().getHandleIdentifier());
-				node.setStereotype(stereoname);
+				if(stereoname == null) {
+					node.setStereotype("NULL");
+				}
+				else node.setStereotype(stereoname);
 			}
 			else {
 				node.setStereotype("FIELD");
