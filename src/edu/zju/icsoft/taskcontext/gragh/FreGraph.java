@@ -29,16 +29,4 @@ public class FreGraph {
 	public void addE(Edge e) {
 		this.edges.add(e);
 	}
-	public void show() {
-		for(Vertical v:verticals) {
-			System.out.println(v.getId()+" "+v.getStereoType());
-		}
-		for(Edge e : edges) {
-			int start = e.getStartV().getId();
-			int end = e.getEndV().getId();
-			System.out.println(start+" "+e.getRelate()+" "+end);
-		}
-		System.out.println(freq);
-		System.out.println("~~~~~~");
-	}
 }
