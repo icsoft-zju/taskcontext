@@ -93,7 +93,7 @@ public class Graph {
 				}
 			}
 			for(ToolNode node:temp) {
-				node.setId(nowId);
+				node.setId(-1);
 				toolNodes.add(node);
 			}
 		}
